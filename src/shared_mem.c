@@ -199,6 +199,26 @@ int shm_get_command(shared_mem_t *shm, command_type_t *cmd,
     return 0;
 }
 
+int shm_try_get_command(shared_mem_t *shm, command_type_t *cmd,
+                        uint32_t *param1, uint32_t *param2) {
+    if (!shm) return -1;
+
+    pthread_mutex_lock(&shm->mutex);
+
+    if (!shm->cmd_pending) {
+        pthread_mutex_unlock(&shm->mutex);
+        return -1;  /* No command pending */
+    }
+
+    if (cmd) *cmd = shm->cmd;
+    if (param1) *param1 = shm->cmd_param1;
+    if (param2) *param2 = shm->cmd_param2;
+
+    pthread_mutex_unlock(&shm->mutex);
+
+    return 0;
+}
+
 int shm_send_response(shared_mem_t *shm, response_status_t status,
                       int32_t *data, int data_count) {
     if (!shm) return -1;

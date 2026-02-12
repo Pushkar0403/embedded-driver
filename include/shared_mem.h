@@ -68,6 +68,8 @@ int shm_wait_response(shared_mem_t *shm, response_status_t *status,
                       int32_t *data, int data_count);
 int shm_get_command(shared_mem_t *shm, command_type_t *cmd,
                     uint32_t *param1, uint32_t *param2);
+int shm_try_get_command(shared_mem_t *shm, command_type_t *cmd,
+                        uint32_t *param1, uint32_t *param2);
 int shm_send_response(shared_mem_t *shm, response_status_t status,
                       int32_t *data, int data_count);
 

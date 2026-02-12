@@ -1,6 +1,6 @@
 # Embedded Device Driver Makefile
 CC = gcc
-CFLAGS = -Wall -Wextra -Wpedantic -std=c11 -I./include
+CFLAGS = -Wall -Wextra -Wpedantic -std=c11 -D_GNU_SOURCE -I./include
 LDFLAGS = -pthread
 
 # Debug/Release flags

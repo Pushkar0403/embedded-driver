@@ -173,7 +173,7 @@ int main(int argc, char *argv[]) {
         /* Check for commands (non-blocking check) */
         command_type_t cmd;
         uint32_t p1, p2;
-        if (shm_get_command(shm, &cmd, &p1, &p2) == 0 && cmd != CMD_NONE) {
+        if (shm_try_get_command(shm, &cmd, &p1, &p2) == 0 && cmd != CMD_NONE) {
             process_command(shm, &motor, &sensors, cmd, p1, p2);
         }
 
@@ -182,6 +182,7 @@ int main(int argc, char *argv[]) {
             printf("Tick %d: State=%d Speed=%u Position=%d Temp=%d\n",
                    tick, motor_get_state(&motor), motor_get_speed(&motor),
                    motor_get_position(&motor), sensor_read(&sensors, 2));
+            fflush(stdout);
         }
 
         usleep(10000);  /* 10ms */
